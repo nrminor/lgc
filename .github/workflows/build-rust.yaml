@@ -17,4 +17,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build
-      run: cargo build lgc --verbose
+      run: cd lgc && cargo build --verbose
