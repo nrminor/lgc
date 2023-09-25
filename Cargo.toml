@@ -2,7 +2,23 @@
 name = "lgc"
 version = "0.1.0"
 edition = "2021"
+license = "MIT"
+keywords = ["science", "reproducibility", "bioinformatics", "software development"]
+categories = ["command-line-utilities", "science"]
+repository = "https://github.com/nrminor/lgc"
+description = "Let's Get Coding! A command line tool that creates template files and configures a development environment for projects in a variety of languages."
+documentation = "https://github.com/nrminor/lgc/blob/main/README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[lib]
+name = "lets_get_coding"
+path = "src/lib.rs"
+
+[[bin]]
+name = "lgc"
+path = "src/main.rs"
+
 [dependencies]
+clap = { version = "4.3", features = ["derive"] }
+subprocess = "0.2.9"
