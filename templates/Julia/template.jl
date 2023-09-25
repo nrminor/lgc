@@ -22,11 +22,13 @@ Validate the age of a user.
 function validate_age(user::UserData)
     if user.age < 18
         return nothing, "User $(user.name) is under 18."
-    elseif user.age > 120
-        return nothing, "User $(user.name)'s age $(user.age) is not valid."
-    else
-        return user, nothing
     end
+    if user.age > 120
+        return nothing, "User $(user.name)'s age $(user.age) is not valid."
+    end
+    
+    return user, nothing
+
 end
 precompile(validate_age, (UserData,))
 
