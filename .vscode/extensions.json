@@ -1,0 +1,17 @@
+{
+    "recommendations": [
+        "github.vscode-github-actions",
+        "1yib.rust-bundle",
+        "rust-lang.rust-analyzer",
+        "redhat.vscode-yaml",
+        "reditorsupport.r",
+        "ms-python.vscode-pylance",
+        "ms-python.pylint",
+        "ms-python.python",
+        "nextflow.nextflow",
+        "modular-mojotools.vscode-mojo",
+        "julialang.language-julia",
+        "golang.go",
+        "ms-python.autopep8"
+    ]
+}
