@@ -12,4 +12,7 @@ pub mod lib {
     pub mod rust;
     pub mod nextflow;
 
+    // pulling in tooling calls
+    pub mod tooling_calls;
+
 }
