@@ -1,8 +1,14 @@
-name: CI
+name: Rust CI
 
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - 'src/main.rs'
+      - 'src/lib.rs'
+      - 'lib/*'
+      - 'cargo.toml'
+      - 'cargo.lock'
   pull_request:
     branches: [ "main" ]
 
@@ -17,4 +23,4 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build
-      run: cd lgc && cargo build --verbose
+      run: cargo build --verbose

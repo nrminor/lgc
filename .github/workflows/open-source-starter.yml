@@ -1,4 +1,4 @@
-name: Check Required Files
+name: Open Source Starter Files
 
 on: [push]
 
