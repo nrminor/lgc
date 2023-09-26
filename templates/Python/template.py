@@ -1,33 +1,40 @@
 #!/usr/bin/env python3
 
 """
-This module showcases a number of powerful python idioms, including:
+This module showcases a number of powerful python idioms alongside some newer Python features:
+
+    ### General Good Practices in Python
     - exactly zero global variables (if there were any, we'd make sure they are never modified and
-      denote it as constant by putting its variable name in all caps.)
+      denote them as constants by putting their variable names in all caps). Like many of the idioms
+      below, Python itself does not natively support constants--but many Python linters do!
     - docstrings for every function and class.
+    - command line argument construction and parsing with `argparse`
+    - no unnecessary usage of `else` statements when the `if` statement calls `return`.
+    - main() takes and returns no arguments. It is simply the entrypoint of the program.
+    - using concise f-strings to embed strings within strings via their variable bindings.
+    - using `if` statements to test the "unhappy" condition first. This helps reduce nesting, which
+      can be particularly pernicious in Python because of its use of whitespace to denote 
+      an unfinished statement.
+    - the `if __name__ == "__main__":` block at the bottom, which signals to collaborators that this
+      is a script and not a library.
+
+    ### Making the most of linters with type annotations and other "Rust-like" conventions
     - a simple dataclass to store and validate information without the potential pitfalls of tuples
       and dicts (namely, that they can by any type, so a linter can't prevent you from misusing
       functions on them).
     - pervasive type hinting, which allows linters like Pylance to catch errors that you might not 
       otherwise have detected until runtime (or worse, until some other time in the future!)
-    - the aforementioned Result type, which can be used for elegant, Rust-style error handling. You
-      could also use `Union{T, str}` or `T | str` to do the same thing. Also keep in mind the
-      `Optional[T]` from the `typing` library, which is the same as using `Union{T, None}` or
-      `T | None` as the return type.
-    - command line argument construction and parsing with `argparse`
-    - structural pattern matching via the `match`-`case` block, which was introduced in Python 3.10,
-      which we use to handle errors.
-    - no unnecessary usage of `else` statements when the `if` statement calls `return`.
-    - using `if` statements to test the "unhappy" condition first. This helps reduce nesting, which
-      can be particularly pernicious in Python because of its use of whitespace to denote 
-      an unfinished statement.
-    - handling errors as one of the main function's most important responsibilities.
-    - main() takes and returns no arguments.
-    - using concise f-strings to embed strings within strings via their variable bindings.
-    - the `if __name__ == "__main__":` block at the bottom, which signals to collaborators that this
-      is a script and not a library.
+    - the Result type, which can be used for elegant, Rust-style error handling. You could also use
+      `Union{T, str}` or `T | str` to do the same thing. Also keep in mind the `Optional[T]` from
+      the `typing` library, which is the same as using `Union{T, None}` or `T | None` as the return
+      type.
 
-Example:
+    ### Error handling
+    - structural pattern matching via the `match`-`case` block, which was introduced in Python 3.10,
+      to handle errors gracefully. This is once again an influence from Rust.
+    - handling errors as one of the main function's most important responsibilities.
+
+Example Invocation:
     $ python3 template.py Brian 22
 """
 
@@ -85,11 +92,14 @@ def main() -> None:
     if sys.version_info <= (3, 10):
         sys.exit("Script requires Python 3.10 or higher")
 
-    # parse command line arguments
+    # parse command line arguments with `argparse`
     args = parse_args()
 
     # use structural pattern matching to create a new `UserData`
-    # instance or handle any errors
+    # instance or handle any errors. This guarantees that we won't
+    # accidentally pass an empty or corrupted UserData instance to
+    # the function `validate_age()`, which would produce unexpected
+    # errors in that case
     match args:
         case Ok(args):
             user_from_args = UserData(args.unwrap().name,  args.unwrap().age)
@@ -106,10 +116,10 @@ def main() -> None:
     # loop through each user and make sure all their ages make sense
     for user in [user1, user2, user3, user_from_args]:
         result = validate_age(user)
-        if result.is_ok():
-            print(f"User {result.unwrap().name} has a valid age.")
-        else:
+        if not result.is_ok():
             print(result.unwrap_err())
+            continue
+        print(f"User {result.unwrap().name} has a valid age.")
 
 if __name__ == "__main__":
     main()
