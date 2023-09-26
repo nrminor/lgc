@@ -1,5 +1,21 @@
 #!/usr/bin/env -C julia -t auto
 
+"""
+This module showcases a number of powerful Julia idioms, including:
+    - using the shebang to allow julia to use the available threads rather than 
+      running in its default single-threaded module
+    - using a statically typed struct to structure data and catch errors instead
+      of using a Tuple or a Dict, which can be type Any.
+    - using tuple unpacking to capture multiple values return by a function
+    - using `_` to throw away one of those values
+    - using `precompile()` to (you guessed it) precompile the function rather than
+      running it with the default Julia just-in-time compiler. This can help get
+      around the so-called "time-to-first-plot" problem. The first time you run a
+      function in a Julia script, it has to compile and run that function. By
+      using a forced ahead-of-time compilation, and thus decoupling compilation from
+      the first runtime, you can get better performance.
+"""
+
 # Define a UserData struct to hold user information
 struct UserData
     name::String
@@ -27,7 +43,7 @@ function validate_age(user::UserData)
         return nothing, "User $(user.name)'s age $(user.age) is not valid."
     end
     
-    return user, nothing
+    return user, "throw away demo", nothing
 
 end
 precompile(validate_age, (UserData,))
@@ -43,7 +59,7 @@ function main()
 
     # Validate each user
     for user in users
-        valid_user, err = validate_age(user)
+        valid_user, _, err = validate_age(user)
         if err === nothing
             println("User $(valid_user.name) has a valid age.")
         else

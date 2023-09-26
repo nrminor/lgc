@@ -2,14 +2,18 @@
 
 """
 This module showcases a number of powerful python idioms, including:
-    - exactly zero global variables
+    - exactly zero global variables (if there were, we'd make sure it is never modified and denote
+      it as constant by putting its variable nam in all caps.)
     - docstrings for every function and class.
     - a simple dataclass to store and validate information without the potential pitfalls of tuples
       and dicts (namely, that they can by any type, so a linter can't prevent you from misusing
       functions on them).
     - pervasive type hinting, which allows linters like Pylance to catch errors that you might not 
       otherwise have detected until runtime (or worse, until some other time in the future!)
-    - the aforementioned Result type, which can be used for elegant, Rust-style error handling
+    - the aforementioned Result type, which can be used for elegant, Rust-style error handling. You
+      could also use `Union{T, str}` or `T | str` to do the same thing. Also keep in mind the
+      `Optional[T]` from the `typing` library, which is the same as using `Union{T, None}` or
+      `T | None` as the return type.
     - command line argument construction and parsing with `argparse`
     - structural pattern matching via the `match`-`case` block, which was introduced in Python 3.10,
       which we use to handle errors.
@@ -18,6 +22,7 @@ This module showcases a number of powerful python idioms, including:
       can be particularly pernicious in Python because of its use of whitespace to denote 
       an unfinished statement.
     - handling errors as one of the main function's most important responsibilities.
+    - main() takes and returns no arguments.
     - using concise f-strings to embed strings within strings via their variable bindings.
     - the `if __name__ == "__main__":` block at the bottom, which signals to collaborators that this
       is a script and not a library.
