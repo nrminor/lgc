@@ -2,8 +2,8 @@
 
 """
 This module showcases a number of powerful python idioms, including:
-    - exactly zero global variables (if there were, we'd make sure it is never modified and denote
-      it as constant by putting its variable nam in all caps.)
+    - exactly zero global variables (if there were any, we'd make sure they are never modified and
+      denote it as constant by putting its variable name in all caps.)
     - docstrings for every function and class.
     - a simple dataclass to store and validate information without the potential pitfalls of tuples
       and dicts (namely, that they can by any type, so a linter can't prevent you from misusing
