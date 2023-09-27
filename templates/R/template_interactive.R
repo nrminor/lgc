@@ -29,19 +29,15 @@ user3 <- list("Charlie", 130)
 # Store users in a list
 users <- list(user1, user2, user3)
 
-# Function to validate the age of a user
-validate_age <- compiler::cmpfun(function(user) {
-  if (user$age < 18) {
-    return(paste("User", user$name, "is under 18."))
-  }
-  if (user$age > 120) {
-    return(paste("User", user$name, "age", user$age, "is not valid."))
-  }
-  return(paste("User", user$name, "has a valid age."))
-})
-
 # Validate each user
 for (user in users) {
-  result <- validate_age(user)
-  cat(result, "\n")
+  if (user$age < 18) {
+    print(paste("User", user$name, "is under 18.", sep = " "))
+    continue
+  }
+  if (user$age > 120) {
+    print(paste("User", user$name, "age", user$age, "is not valid.", sep = " "))
+    continue
+  }
+  print(paste("User", user$name, "has a valid age."))
 }

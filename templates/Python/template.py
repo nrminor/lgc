@@ -28,11 +28,25 @@ This module showcases a number of powerful python idioms alongside some newer Py
       `Union{T, str}` or `T | str` to do the same thing. Also keep in mind the `Optional[T]` from
       the `typing` library, which is the same as using `Union{T, None}` or `T | None` as the return
       type.
-
-    ### Error handling
     - structural pattern matching via the `match`-`case` block, which was introduced in Python 3.10,
       to handle errors gracefully. This is once again an influence from Rust.
     - handling errors as one of the main function's most important responsibilities.
+
+    ### Other recommendations
+    - In many cases, Python is used for data exploration and analysis, often with data frames. Data
+      frames are often parsed from CSV or Excel files and subsequently queried via column names or
+      column indices. In both cases, it is wise to use `assert` statements, with a helpful message,
+      to double-check that the expected column name or index is actually present. This makes runtime
+      errors a little more helpful.
+    - When performance matters with big data frames, use Polars instead of Pandas.
+    - When working with data, creating too many visualizations, similar to assertions, is preferable
+      to creating too few. We recommend the Seaborn package for doing so. 
+    - Parsing datetimes can be a nightmare in any language. We recommend the pendulum package for
+      doing so.
+    - Python is an excellent glue language. Rather than performing all tasks in Python, which may be
+      slower as a result, we recommend making liberal use of subprocesses to run other purpose-build
+      command line tools in your Python scripts. Just make sure to avoid opening up a security risk
+      by using the option `shell = True`.
 
 Example Invocation:
     $ python3 template.py Brian 22

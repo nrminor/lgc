@@ -1,4 +1,4 @@
-#!/usr/bin/env -C julia -t auto
+#!/usr/bin/env -S julia -t auto
 
 """
 This module showcases a number of powerful Julia idioms, including:
@@ -43,7 +43,7 @@ function validate_age(user::UserData)
         return nothing, "User $(user.name)'s age $(user.age) is not valid."
     end
     
-    return user, "throw away demo", nothing
+    return user, nothing
 
 end
 precompile(validate_age, (UserData,))
@@ -59,7 +59,7 @@ function main()
 
     # Validate each user
     for user in users
-        valid_user, _, err = validate_age(user)
+        valid_user, err = validate_age(user)
         if err === nothing
             println("User $(valid_user.name) has a valid age.")
         else
