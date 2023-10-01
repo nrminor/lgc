@@ -1,33 +1,6 @@
-use std::env;
-use std::fs;
+use crate::lib::copy_template;
 use std::io::{self, Write};
 use std::process::Command;
-
-fn copy_template(project_name: &String) -> std::io::Result<()> {
-    // Get the current executable's path
-    let exe_path = env::current_exe()?;
-    let root_dir = exe_path
-        .parent()
-        .unwrap()
-        .parent()
-        .unwrap()
-        .parent()
-        .unwrap();
-
-    // Form the path to the source file relative to the executable
-    let src_file = root_dir.join("templates/Python/template.py");
-
-    // Get the current working directory
-    let dest_dir = env::current_dir()?;
-
-    // Form the path to the destination file
-    let dest_file = dest_dir.join(format!("{}/{}/template.py", project_name, project_name));
-
-    // Copy the file
-    fs::copy(src_file, dest_file)?;
-
-    Ok(())
-}
 
 pub fn build_env(project_name: &String) -> std::io::Result<()> {
     let check_poetry = Command::new("poetry").arg("--version").output();
@@ -38,7 +11,7 @@ pub fn build_env(project_name: &String) -> std::io::Result<()> {
                 .arg("new")
                 .arg(&project_name)
                 .output();
-            copy_template(&project_name)?;
+            copy_template(&project_name, "Python")?;
         }
         Err(_) => {
             loop {
@@ -64,7 +37,7 @@ pub fn build_env(project_name: &String) -> std::io::Result<()> {
                         .arg("new")
                         .arg(&project_name)
                         .output();
-                    copy_template(&project_name)?;
+                    copy_template(&project_name, "Python")?;
                 } else {
                     panic!("Python environment cannot be set up without a Poetry installation.")
                 }

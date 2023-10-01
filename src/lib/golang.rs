@@ -33,11 +33,9 @@ pub fn build_env(project_name: &String) -> std::io::Result<()> {
     let check_go = Command::new("go").arg("--help").output();
 
     match check_go {
-
         /*
         PLEASE IGNORE THE FOLLOWING FOR NOW.
         */
-
         Ok(_) => {
             let _ = Command::new("poetry")
                 .arg("new")
