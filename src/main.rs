@@ -1,5 +1,5 @@
 use clap::Parser;
-use lets_get_coding::lib::{lgc_commands, python, julia};
+use lets_get_coding::lib::{lgc_commands, python, julia, golang};
 
 /// Search for a pattern in a file and display the lines that contain it.
 #[derive(Parser)]
@@ -21,8 +21,11 @@ fn main() {
             python::build_env(&project_name).expect("Failed to build Python environment")
         },
         lgc_commands::Language::Julia => {
-            julia::build_env(&project_name).expect("Failed to build environment")
+            julia::build_env(&project_name).expect("Failed to build Julia environment")
         },
-        _ => panic!("Other languages are not yet supported."),
+        lgc_commands::Language::Go => {
+            golang::build_env(&project_name).expect("Failed to build Go environment")
+        },
+        _ => panic!("Only Python, Julia, and Go are supported at this time."),
     }
 }
